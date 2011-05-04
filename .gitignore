@@ -1,0 +1,5 @@
+*.pyc
+
+# specific dirs and files
+_site
+config.py
