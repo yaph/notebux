@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block header %}###Index###{% endblock %}
+
+{% block content %}
+
+<table>
+{% for doc in index %}
+    <tr>
+        <td>{% if doc.Images and doc.Images.SmallImage %}<img src="{{ doc.Images.SmallImage.URL|e }}" alt="Product image">{% endif %}</td>
+        <td><a href="{{ doc.URL|e }}">{{ doc.Title|e }}</a></td>
+        <td>{{ doc.Brand|e }}</td>
+        <td>{{ doc.ListPrice|e }}</td>
+    </tr>
+
+{% endfor %}
+</table>
+
+
+{% endblock %}

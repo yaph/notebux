@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ doc.Title|e }}{% endblock %}
+
+{% block description %}{{ doc.Description|e }}{% endblock %}
+
+{% block header %}<h1>{{ doc.Title|e }}</h1>{% endblock %}
+
+{% block content %}
+
+{{ doc.Description|e }}
+
+{% if doc.Images and doc.Images.MediumImage %}
+<div>
+<img src="{{ doc.Images.MediumImage.URL|e }}" alt="Product image">
+</div>
+{% endif %}
+
+<div>
+<a href="{{ doc.URL|e }}">Buy from Amazon</a>
+</div>
+
+<div>
+<a href="{{ base }}/brand/{{ doc.Brand|e }}/">{{ doc.Brand|e }}</a>
+</div>
+
+<pre>
+{{ doc }}
+</pre>
+
+{% endblock %}
