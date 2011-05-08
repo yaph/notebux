@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block header %}###Index###{% endblock %}
+{% block title %}Notebooks running Linux and Notebook Accessories{% endblock %}
+
+{% block header %}Notebooks running Linux and Notebook Accessories{% endblock %}
 
 {% block content %}
 
@@ -8,7 +10,7 @@
 {% for doc in index %}
     <tr>
         <td>{% if doc.Images and doc.Images.SmallImage %}<img src="{{ doc.Images.SmallImage.URL|e }}" alt="Product image">{% endif %}</td>
-        <td><a href="{{ doc.URL|e }}">{{ doc.Title|e }}</a></td>
+        <td><a href="{{ base }}/products/{{ doc.ASIN|e }}/">{{ doc.Title|e }}</a></td>
         <td>{{ doc.Brand|e }}</td>
         <td>{{ doc.ListPrice|e }}</td>
     </tr>

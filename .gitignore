@@ -3,3 +3,5 @@
 # specific dirs and files
 _site
 config.py
+deploy.sh
+static/js/libs

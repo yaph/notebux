@@ -1,4 +1,5 @@
 import data
+import shutil
 import codecs
 import os
 from jinja2 import Environment, PackageLoader
@@ -16,9 +17,14 @@ if __name__ == '__main__':
     print "\n".join(['############################' for i in range(3)])
 
     path_root = os.getcwd()
-    path_static = os.path.join(path_root, 'static')
+    path_static = os.path.join(path_root, 'notebux/static')
     path_tpl = os.path.join(path_root, 'templates')
     path_dest = os.path.join(path_root, '_site')
+    path_base = ''
+
+    # copy static files
+    shutil.rmtree(path_dest)
+    shutil.copytree(path_static, path_dest)
 
     docs = data.get_docs()
     print "Number of docs: %d" % len(docs)
@@ -30,8 +36,11 @@ if __name__ == '__main__':
     env = Environment(loader=PackageLoader('notebux', 'templates'))
     template_page = env.get_template('page.html')
 
-    # create 1st 10 pages
-    l = 1
+    # cache templates after rendering
+    template_cache = {}
+
+    # create 1st 1000 pages
+    l = 1000
     c = 0
     products = []
     for asin in docs:
@@ -40,7 +49,7 @@ if __name__ == '__main__':
         if c > l:
             break
 
-        html = template_page.render(doc=d, base=path_dest, indexes=indexes)
+        html = template_page.render(doc=d, base=path_base, indexes=indexes)
         path_page = 'products/%s/' % d['ASIN']
         path_file = os.path.join(path_dest, path_page)
 
@@ -48,13 +57,21 @@ if __name__ == '__main__':
         f.write(html)
         f.close()
 
-    # create index
+    # create main index
     template_page = env.get_template('index.html')
-    html = template_page.render(base=path_dest, index=indexes['index'])
-
+    html = template_page.render(base=path_base, index=indexes['index'])
     f = create_file(path_dest, 'index.html')
     f.write(html)
     f.close()
+
+    del indexes['index']
+    for i in indexes:
+        for name in indexes[i]:
+            html = template_page.render(base=path_base, index=indexes[i][name])
+            path_index = "%s/%s/%s" % (path_dest, i.lower(), name.lower())
+            f = create_file(path_index, 'index.html')
+            f.write(html)
+            f.close()
 
 #    operatingsystems = indexes['OperatingSystem']
 #    print "Number of operatingsystems: %d" % len(operatingsystems)

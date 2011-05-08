@@ -8,7 +8,7 @@
 
 {% block content %}
 
-{{ doc.Description|e }}
+{{ doc.Description|striptags|e }}
 
 {% if doc.Images and doc.Images.MediumImage %}
 <div>
@@ -23,9 +23,5 @@
 <div>
 <a href="{{ base }}/brand/{{ doc.Brand|e }}/">{{ doc.Brand|e }}</a>
 </div>
-
-<pre>
-{{ doc }}
-</pre>
 
 {% endblock %}
