@@ -24,18 +24,17 @@ def get_docs():
 
 def get_indexes(docs):
     """Get indexes of docs grouped by attribute."""
-    indexes = {'index':[]}
+    indexes = {}
     attr = ['Brand', 'OperatingSystem', 'Manufacturer', 'ProductGroup']
 
     for asin in docs:
         doc = docs[asin]
-        indexes['index'].append(doc)
         for a in attr:
             if doc.has_key(a):
                 val = doc[a]
                 if indexes.has_key(a) is False:
                     indexes[a] = {}
                 if indexes[a].has_key(val) is False:
-                    indexes[a][val] = []
-                indexes[a][val].append(doc)
+                    indexes[a][val] = {}
+                indexes[a][val][asin] = doc
     return indexes

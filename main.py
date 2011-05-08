@@ -1,3 +1,4 @@
+import sys
 import data
 import shutil
 import codecs
@@ -14,16 +15,17 @@ def create_file(directory, name):
 
 if __name__ == '__main__':
 
-    print "\n".join(['############################' for i in range(3)])
+    path_base = ''
+    if len(sys.argv) > 1:
+        path_base = sys.argv[1]
 
     path_root = os.getcwd()
     path_static = os.path.join(path_root, 'notebux/static')
     path_tpl = os.path.join(path_root, 'templates')
     path_dest = os.path.join(path_root, '_site')
-    path_base = ''
 
     # copy static files
-    shutil.rmtree(path_dest)
+    shutil.rmtree(path_dest, True)
     shutil.copytree(path_static, path_dest)
 
     docs = data.get_docs()
@@ -59,15 +61,14 @@ if __name__ == '__main__':
 
     # create main index
     template_page = env.get_template('index.html')
-    html = template_page.render(base=path_base, index=indexes['index'])
+    html = template_page.render(base=path_base, index=docs, indexes=indexes)
     f = create_file(path_dest, 'index.html')
     f.write(html)
     f.close()
 
-    del indexes['index']
     for i in indexes:
         for name in indexes[i]:
-            html = template_page.render(base=path_base, index=indexes[i][name])
+            html = template_page.render(base=path_base, index=indexes[i][name], indexes=indexes)
             path_index = "%s/%s/%s" % (path_dest, i.lower(), name.lower())
             f = create_file(path_index, 'index.html')
             f.write(html)

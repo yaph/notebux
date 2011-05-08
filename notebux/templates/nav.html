@@ -1,0 +1,14 @@
+<nav class="clearfix">
+<ul>
+    <li><a href="{{ base }}/">Home</a></li>
+    {% for i in indexes %}
+        <li><a>{{ i }}</a>
+            <ul>
+            {% for name in indexes[i] %}
+                <li><a href="{{ base }}/{{ i|lower|e }}/{{ name|lower|e }}">{{ name|e }}</a></li>
+            {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+</nav>
