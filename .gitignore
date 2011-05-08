@@ -4,4 +4,4 @@
 _site
 config.py
 deploy.sh
-static/js/libs
+notebux/static/js/libs
