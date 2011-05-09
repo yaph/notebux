@@ -9,7 +9,7 @@
 <table>
 {% for i in index %}
     <tr>
-        <td>{% if index[i].Images and index[i].Images.SmallImage %}<img src="{{ index[i].Images.SmallImage.URL|e }}" alt="Product image">{% endif %}</td>
+        <td>{% if index[i].Images and index[i].Images.MediumImage %}<img src="{{ index[i].Images.MediumImage.URL|e }}" alt="Product image">{% endif %}</td>
         <td><a href="{{ base }}/products/{{ index[i].ASIN|e }}/">{{ index[i].Title|e }}</a></td>
         <td>{{ index[i].Brand|e }}</td>
         <td>{{ index[i].ProductGroup|e }}</td>

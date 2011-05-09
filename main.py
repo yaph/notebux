@@ -60,8 +60,9 @@ if __name__ == '__main__':
         f.close()
 
     # create main index
-    template_page = env.get_template('index.html')
-    html = template_page.render(base=path_base, index=docs, indexes=indexes)
+    sliced_docs = dict((k, docs[k]) for k in docs.keys()[:50])
+    template_page = env.get_template('gallery.html')
+    html = template_page.render(base=path_base, index=sliced_docs, indexes=indexes)
     f = create_file(path_dest, 'index.html')
     f.write(html)
     f.close()
